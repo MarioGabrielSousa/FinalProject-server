@@ -8,6 +8,8 @@ const path         = require('path');
 const cors         = require('cors');
 const session      = require('express-session');
 const passport     = require('passport');
+
+
 //Include passport configuration
 require('./configs/passport');
 mongoose
@@ -20,6 +22,8 @@ mongoose
     console.error('Error connecting to mongo', err)
   });
 const app = express();
+
+
 // Middleware Setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -51,8 +55,10 @@ app.use(
 )
 const index = require('./routes/index');
 app.use('/', index);
-const projectRoutes = require('./routes/project-routes');
-app.use('/api', projectRoutes);
+const workoutRoutes = require('./routes/workout-routes');
+app.use('/api', workoutRoutes);
 const authRoutes = require('./routes/auth-routes');
 app.use('/api', authRoutes);
+
+
 module.exports = app;

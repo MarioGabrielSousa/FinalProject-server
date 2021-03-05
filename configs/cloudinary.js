@@ -1,7 +1,7 @@
 const cloudinary = require('cloudinary').v2; // methods to connect with cloudinary cloud
 const multer = require('multer'); // methods to deal form-data requests
-const { CloudinaryStorage } = require('multer-storage-cloudinary'); // methods to connect
-//multer with cloudinary
+const { CloudinaryStorage } = require('multer-storage-cloudinary'); // methods to connect multer with cloudinary
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
   api_key: process.env.CLOUDINARY_KEY,
@@ -10,7 +10,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: 'projects',
+    folder: 'workouts',
     allowedFormats: ['jpg', 'png'],
   },
   filename: function(req, file, cb) {
