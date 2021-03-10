@@ -7,7 +7,17 @@ const axios = require('axios');
 //CRUD
 //READ
 router.get("/workouts", (req, res) => {
-  Workout.find()
+  Workout.find({isPublic: true})
+    .then((allWorkoutsFromDB) => {
+      res.status(200).json(allWorkoutsFromDB);
+    })
+    .catch((error) => {
+      res.status(200).json(`Error occured ${error}`);
+    });
+});
+router.get("/myworkouts/:userId", (req, res) => {
+  let userId = req.params.userId
+  Workout.find( {user: userId})
     .then((allWorkoutsFromDB) => {
       res.status(200).json(allWorkoutsFromDB);
     })
@@ -27,22 +37,36 @@ router.get("/exercises", (req, res) => {
  
 });
 
+router.get("/exercises/:id", (req, res) => {
+const exerciseId = req.params.id; 
+  axios.get(`https://wger.de/api/v2/exerciseinfo/${exerciseId}?language=2`).then((response) => {
+    console.log(response)
+    res.status(200).json(response.data);
+  })
+  // call api here and get all exercises
+  //https://wger.de/api/v2/exercise/?language=2
+ 
+});
+
+
 //CREATE
 router.post("/workouts", (req, res) => {
-  const { title, description, weekdays, exercises } = req.body;
+  const { name, type, description, weekdays, exercises, user, isPublic } = req.body;
+  console.log(req.body)
 
-  if (!title || !description || !weekdays || !exercises) {
+  if (!name || !type || !exercises || !user) {
     //quero que isto o cliente previna isto
     res.status(400).json("Missing Fields");
     return;
   }
   Workout.create({
-    title,
+    name,
+    type,
     description,
     weekdays,
     exercises,
-    //local
-    //duration
+    user,
+    isPublic
   })
     .then((response) => {
       res.status(200).json(response);

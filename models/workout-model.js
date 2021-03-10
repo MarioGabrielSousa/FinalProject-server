@@ -4,15 +4,13 @@ const Schema = mongoose.Schema;
 Schema.Types.Exercise = Exercise*/
 
 const workoutSchema = new Schema({
-  title: String,
+  name: String,
+  type: String,
   description: String,
   exercises: [Object],
-  weekdays: [String], //<"Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun">
-
-  //imageUrl: String
-  //local: String
-  //session duration: String (tipo 1h30m)
-
+  weekdays: [String],
+  user: mongoose.Schema.Types.ObjectId,
+  isPublic: Boolean
 });
 
 const Workout = mongoose.model('Workout', workoutSchema);

@@ -8,9 +8,10 @@ const passport = require("passport");
 //Signup
 router.post("/signup", (req, res) => {
   const { username, email, password } = req.body;
+  console.log(req.body)
   //Server side validation on empty fields
   if (username === "" || email === "" || password === "") {
-    res.state(400).json("missing fields");
+    res.status(400).json("missing fields");
     return;
   }
   //Server side validation on password constrain
@@ -38,6 +39,7 @@ router.post("/signup", (req, res) => {
         res.status(200).json(response);
       })
       .catch((error) => {
+        res.status(500).json(error);
         //.code is mongoose validation error
         if (error.code === 11000) {
           res.status(500).json("username should be unique");
