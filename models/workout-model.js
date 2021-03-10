@@ -1,20 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
-const exerciseSchema = new Schema({
-  name: String,
-  sets: Number,
-  reps: Number,
-  rest: Number,
-});
-
 /*const Exercise = mongoose.SchemaTypes('Exercise', exerciseSchema);
 Schema.Types.Exercise = Exercise*/
 
 const workoutSchema = new Schema({
   title: String,
   description: String,
-  exercises: [String],
+  exercises: [Object],
   weekdays: [String], //<"Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun">
 
   //imageUrl: String

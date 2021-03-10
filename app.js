@@ -37,7 +37,7 @@ app.use(session({
     sameSite: true, //the requester is on the same domain
     secure: false, //not using https
     httpOnly: true, //site on only on http
-    maxAge: 60000 //coolie time to live
+    maxAge: 600000 //coolie time to live
   },
   rolling: true //session gets refreshed
 }))

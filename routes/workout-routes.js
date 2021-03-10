@@ -3,7 +3,7 @@ const router = express.Router();
 const Workout = require("../models/workout-model");
 const mongoose = require("mongoose");
 const fileUpload = require("../configs/cloudinary");
-
+const axios = require('axios');
 //CRUD
 //READ
 router.get("/workouts", (req, res) => {
@@ -14,6 +14,17 @@ router.get("/workouts", (req, res) => {
     .catch((error) => {
       res.status(200).json(`Error occured ${error}`);
     });
+});
+
+router.get("/exercises", (req, res) => {
+
+  axios.get('https://wger.de/api/v2/exercise/?language=2&limit=500').then((response) => {
+    console.log(response)
+    res.status(200).json(response.data.results);
+  })
+  // call api here and get all exercises
+  //https://wger.de/api/v2/exercise/?language=2
+ 
 });
 
 //CREATE
@@ -72,27 +83,6 @@ router.put("/workouts/:id", (req, res) => {
     .catch((error) => {
       res.status(500).json(`Error occurred ${error}`);
     });
-});
-
-//Route to add image to cloudinary
-router.put("/workouts/:id", (req, res) => {
-  const workoutWithNewData = req.body;
-  Workout.findByIdAndUpdate(req.params.id, workoutWithNewData)
-    .then(() => {
-      res.status(200).json(`Workout with id ${req.params.id} was updated`);
-    })
-    .catch((error) => {
-      res.status(500).json(`Error occurred ${error}`);
-    });
-});
-
-//Route to add image to cloudinary
-router.post("/upload", fileUpload.single("file"), (req, res) => {
-  try {
-    res.status(200).json({ fileUrl: req.file.path });
-  } catch (error) {
-    res.status(500).json(`Error occurred ${error}`);
-  }
 });
 
 module.exports = router;
