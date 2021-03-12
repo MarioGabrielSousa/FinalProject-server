@@ -37,10 +37,10 @@ app.use(session({
   saveUninitialized: true,
   resave: false,
   cookie: {
-    sameSite: 'none', //(antes estava true) the requester is on the same domain
-    secure: true, //false, //not using https
-    httpOnly: false, //true //site on only on http
-    maxAge: 60000 //coolie time to live
+    sameSite: false, //the requester is on the same domain
+    secure: true, //not using https
+    httpOnly: false,//site on only on http
+    maxAge: 600000 //coolie time to live
   },
 
 /* 

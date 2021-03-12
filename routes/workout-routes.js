@@ -51,17 +51,17 @@ const exerciseId = req.params.id;
 
 //CREATE
 router.post("/workouts", (req, res) => {
-  const { name, type, description, weekdays, exercises, user, isPublic } = req.body;
+  const { name, category, description, weekdays, exercises, user, isPublic } = req.body;
   console.log(req.body)
 
-  if (!name || !type || !exercises || !user) {
+  if (!name || !category || !exercises || !user) {
     //quero que isto o cliente previna isto
     res.status(400).json("Missing Fields");
     return;
   }
   Workout.create({
     name,
-    type,
+    category,
     description,
     weekdays,
     exercises,

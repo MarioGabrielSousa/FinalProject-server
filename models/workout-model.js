@@ -5,11 +5,11 @@ Schema.Types.Exercise = Exercise*/
 
 const workoutSchema = new Schema({
   name: String,
-  type: String,
+  category: String,
   description: String,
   exercises: [Object],
   weekdays: [String],
-  user: mongoose.Schema.Types.ObjectId,
+  user: mongoose.Schema.Types.ObjectId, //para saber quem criou o exercício
   isPublic: Boolean
 });
 
