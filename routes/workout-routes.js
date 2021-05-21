@@ -12,25 +12,25 @@ router.get("/workouts", (req, res) => {
       res.status(200).json(allWorkoutsFromDB);
     })
     .catch((error) => {
-      res.status(200).json(`Error occured ${error}`);
+      res.status(500).json(`Error occured ${error}`);
     });
 });
-router.get("/myworkouts/:userId", (req, res) => {
-  let userId = req.params.userId
-  Workout.find( {user: userId})
-    .then((allWorkoutsFromDB) => {
-      res.status(200).json(allWorkoutsFromDB);
-    })
-    .catch((error) => {
-      res.status(200).json(`Error occured ${error}`);
-    });
+router.get("/myworkouts/:userId", async (req, res) => {
+  try {
+    let userId = req.params.userId
+   const allWorkoutsFromDB = await Workout.find( {user: userId})
+   res.status(200).json(allWorkoutsFromDB);
+  } catch (e) {
+    res.status(500).json(`Error occured ${error}`);
+  }
 });
 
 router.get("/exercises", (req, res) => {
 
   axios.get('https://wger.de/api/v2/exercise/?language=2&limit=500').then((response) => {
-    console.log(response)
     res.status(200).json(response.data.results);
+  }).catch(e => {
+    res.status(500).json(e);
   })
   // call api here and get all exercises
   //https://wger.de/api/v2/exercise/?language=2
@@ -40,8 +40,10 @@ router.get("/exercises", (req, res) => {
 router.get("/exercises/:id", (req, res) => {
 const exerciseId = req.params.id; 
   axios.get(`https://wger.de/api/v2/exerciseinfo/${exerciseId}?language=2`).then((response) => {
-    console.log(response)
+
     res.status(200).json(response.data);
+  }).catch(e => {
+    res.status(500).json(e);
   })
   // call api here and get all exercises
   //https://wger.de/api/v2/exercise/?language=2

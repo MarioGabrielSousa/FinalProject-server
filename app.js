@@ -40,10 +40,10 @@ app.use(
     saveUninitialized: true,
     resave: false,
     cookie: {
-      sameSite: "none", //the requester is on the same domain
-      secure: true, //not using https
-      httpOnly: false, //site on only on http
-      maxAge: 600000, //coolie time to live
+      sameSite: true, //the requester is on the same domain
+      secure: false, //not using https
+      httpOnly: true, //site on only on http
+      maxAge: 3600000, //coolie time to live
     },
 
     /* 
